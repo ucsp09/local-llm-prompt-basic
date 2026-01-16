@@ -10,7 +10,11 @@ async def make_single_streaming_prompt(session: aiohttp.ClientSession, model: st
         payload = {
             'model': model,
             'prompt': prompt,
-            'max_tokens': constants.OLLAMA_MAX_RESPONSE_TOKENS,
+            "options": {
+                "num_predict": constants.OLLAMA_MAX_RESPONSE_TOKENS,
+                "num_ctx": constants.OLLAMA_CONTEXT_SIZE,
+                "temperature": constants.OLLAMA_DEFAULT_TEMPERATURE
+            },
             'stream': True
         }
         print(f"Making streaming call curl -X POST {url} -d '{payload}' -H \'Content-Type: application/json\' ")

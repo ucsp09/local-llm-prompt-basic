@@ -12,7 +12,11 @@ async def make_single_non_streaming_prompt(session: aiohttp.ClientSession, model
         payload = {
             "model": model,
             "prompt": prompt,
-            "max_tokens": constants.OLLAMA_MAX_RESPONSE_TOKENS,
+            "options": {
+                "num_predict": constants.OLLAMA_MAX_RESPONSE_TOKENS,
+                "num_ctx": constants.OLLAMA_CONTEXT_SIZE,
+                "temperature": constants.OLLAMA_DEFAULT_TEMPERATURE
+            },
             "stream": False
         }
         print(f"Making non-streaming call curl -X POST {url} -d '{payload}' -H 'Content-Type: application/json'")
